@@ -1,3 +1,0 @@
-openai>=1.51
-streamlit>=1.38
-pydub>=0.25

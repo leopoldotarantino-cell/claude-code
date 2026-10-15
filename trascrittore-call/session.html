@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>Trascrittore Call</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <div>
+    <h1>🎙️ Trascrittore Call</h1>
+    <div id="callTitle" class="muted"></div>
+  </div>
+  <div id="status" class="pill">Avvio…</div>
+</header>
+
+<div id="banner" class="banner" hidden></div>
+<button id="enableAudio" class="primary big" hidden>▶ Clicca per avviare la trascrizione</button>
+
+<div class="toolbar">
+  <button id="stop" class="danger" disabled>■ Termina</button>
+  <button id="recapBtn" class="primary" disabled>📌 Genera recap</button>
+  <button id="copy">Copia</button>
+  <button id="download">Scarica .md</button>
+</div>
+
+<main>
+  <section id="recapBox" hidden><h2>Recap</h2><div id="recap"></div></section>
+  <section><h2>Trascrizione <span id="pending" class="muted"></span></h2><div id="transcript"></div></section>
+</main>
+<script type="module" src="session.js"></script>
+</body>
+</html>

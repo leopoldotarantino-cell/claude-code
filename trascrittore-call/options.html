@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="it">
+<head><meta charset="utf-8"><title>Impostazioni – Trascrittore Call</title><link rel="stylesheet" href="style.css"></head>
+<body class="options">
+<h1>⚙️ Impostazioni</h1>
+<label>Chiave API Groq (gratuita)
+  <input id="apiKey" type="password" placeholder="gsk_...">
+  <small>Creala in 2 minuti su <a href="https://console.groq.com/keys" target="_blank">console.groq.com/keys</a> (account gratuito, nessuna carta di credito).</small>
+</label>
+<label>Lingua della call
+  <select id="language">
+    <option value="auto">Automatica (italiano / inglese / spagnolo)</option>
+    <option value="it">Italiano</option>
+    <option value="en">Inglese</option>
+    <option value="es">Spagnolo</option>
+  </select>
+  <small>Se sai già la lingua, sceglierla migliora la precisione.</small>
+</label>
+<label>Il tuo nome nella trascrizione <input id="myName"></label>
+<label>Etichetta per gli altri partecipanti <input id="othersName"></label>
+<details><summary>Avanzate</summary>
+  <label>Modello trascrizione <input id="sttModel"></label>
+  <label>Modello recap <input id="llmModel"></label>
+</details>
+<button id="save" class="primary">Salva</button> <span id="saved" class="muted"></span>
+<script type="module" src="options.js"></script>
+</body>
+</html>
