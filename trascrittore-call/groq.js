@@ -3,7 +3,7 @@ const API = "https://api.groq.com/openai/v1";
 
 export const DEFAULTS = {
   apiKey: "", language: "auto", myName: "Io", othersName: "Interlocutori",
-  sttModel: "whisper-large-v3", llmModel: "llama-3.3-70b-versatile", autoCaptions: true,
+  sttModel: "whisper-large-v3", llmModel: "llama-3.3-70b-versatile", autoCaptions: true, meetAudioBackup: true,
 };
 
 export async function getSettings() {
@@ -69,7 +69,8 @@ const RECAP_PROMPT = `Sei un assistente che riassume call di lavoro. La call pu�
 ## Decisioni prese
 ## Action item (chi / cosa / entro quando, se detto)
 ## Domande aperte
-Non inventare nulla che non sia nella trascrizione. La trascrizione può contenere piccoli errori di riconoscimento.`;
+Non inventare nulla che non sia nella trascrizione. La trascrizione può contenere piccoli errori di riconoscimento.
+Potresti ricevere DUE trascrizioni della stessa call: (A) dai sottotitoli di Meet, con il nome corretto di ogni partecipante; (B) dall'audio, con parole più precise ma che distingue solo l'utente dagli altri. Usale insieme: i nomi da A, i dettagli (cifre, nomi propri, termini tecnici) da B.`;
 
 // Le call lunghe superano i limiti del piano gratuito: si riassumono a pezzi e poi si unisce.
 export async function recap(transcript, s, onStatus = () => {}) {

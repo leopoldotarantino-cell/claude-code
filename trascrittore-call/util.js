@@ -20,9 +20,13 @@ export function merged(entries) {
 export const transcriptText = (entries) =>
   merged(entries).map((e) => `[${fmt(e.t)}] ${e.speaker}: ${e.text}`).join("\n\n");
 
-export const callMarkdown = (call, recapText) =>
+export const SOURCE_LABEL = { meet: "sottotitoli Meet, con i nomi", audio: "audio, Whisper" };
+
+export const callMarkdown = (call, recapText, partner) =>
   `# ${call.title || "Call"} — ${new Date(call.date).toLocaleString("it-IT")}\n\n` +
-  (recapText ? `# Recap\n\n${recapText}\n\n` : "") + `# Trascrizione\n\n${transcriptText(call.entries)}\n`;
+  (recapText ? `# Recap\n\n${recapText}\n\n` : "") +
+  `# Trascrizione (${SOURCE_LABEL[call.source] || "audio"})\n\n${transcriptText(call.entries)}\n` +
+  (partner ? `\n# Trascrizione (${SOURCE_LABEL[partner.source] || "audio"})\n\n${transcriptText(partner.entries)}\n` : "");
 
 export function download(text, date) {
   const a = document.createElement("a");

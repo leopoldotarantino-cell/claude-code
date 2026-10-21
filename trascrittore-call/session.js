@@ -6,7 +6,10 @@ const $ = (id) => document.getElementById(id);
 const params = new URLSearchParams(location.search);
 const startTime = Date.now();
 const key = `call:${startTime}`;
-const call = { title: params.get("title") || "Call", date: new Date(startTime).toISOString(), source: "audio", entries: [] };
+const call = {
+  title: params.get("title") || "Call", date: new Date(startTime).toISOString(), source: "audio",
+  meetCode: params.get("meetCode") || undefined, entries: [],
+};
 const queue = [];
 let settings, tracks = [], streams = [], working = false, recapText = "";
 
@@ -69,6 +72,7 @@ async function stop() {
   streams.forEach((s) => s.getTracks().forEach((t) => t.stop()));
   while (queue.length || working) await new Promise((r) => setTimeout(r, 300));
   setStatus("Terminata", "done");
+  chrome.runtime.sendMessage({ type: "backupStopped" });
   $("recapBtn").disabled = false;
 }
 

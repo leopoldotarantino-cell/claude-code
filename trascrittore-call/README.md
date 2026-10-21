@@ -34,6 +34,19 @@ Clicca l'icona sulla scheda della call: l'estensione registra l'audio e lo trasc
 5. **Recap:** a fine call premi **📌 Genera recap**, poi **Copia** o **Scarica .md**.
 
 Puoi rimpicciolire i sottotitoli di Meet, ma lasciali accesi: se li spegni, la trascrizione si mette in pausa.
+Se ricarichi la pagina o rientri nella stessa Meet entro 3 ore, la trascrizione continua quella già iniziata.
+
+### Backup audio (consigliato per le call importanti)
+
+Durante la Meet clicca l'**icona dell'estensione**: si apre una finestrina che registra anche l'audio e lo trascrive con Whisper. Il badge mostra **🎙 Backup audio attivo**.
+- Così hai **due trascrizioni** della stessa call: se una non funziona, c'è l'altra.
+- **Sottotitoli 📝:** hanno il nome di ogni persona.
+- **Audio 🎙:** è più preciso su cifre, nomi propri e termini tecnici, ma distingue solo te dagli altri.
+- **Recap:** usa entrambe. Nell'archivio passi da una all'altra con il link sopra la trascrizione.
+- **Fine call:** premi **■ Termina** nella finestrina.
+- **Disattivarlo:** togli la spunta nelle Opzioni; a quel punto l'icona apre solo l'archivio.
+
+Consumo indicativo: pochi MB per i sottotitoli e circa 50–100 MB per il backup audio, contro i 500 MB – 1 GB di Meet. Il backup usa la quota gratuita di Groq (circa 8 ore di audio al giorno).
 
 ## Limiti
 

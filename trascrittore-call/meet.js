@@ -6,13 +6,16 @@
   const LEAVE = /abbandona|leave call|salir de la llamada|esci dalla chiamata/i;
   const SELF = /^(you|tu|tú|io)$/i;
 
-  let settings = { myName: "Io", autoCaptions: true };
+  let settings = { myName: "Io", autoCaptions: true, meetAudioBackup: true };
+  let backupOn = false;
   let session = null;
   let captionsSeen = false;
   let clicks = 0;
   const entryOf = new WeakMap(); // blocco dei sottotitoli -> intervento
 
   chrome.storage.sync.get(settings, (s) => (settings = s));
+  chrome.runtime.sendMessage({ type: "backupStatus" }, (r) => { backupOn = !!r?.on; });
+  chrome.runtime.onMessage.addListener((msg) => { if (msg.type === "backup") { backupOn = msg.on; scan(); } });
 
   const captionRegion = () =>
     [...document.querySelectorAll('[role="region"][aria-label]')].find((r) => CAPTIONS.test(r.getAttribute("aria-label")));
@@ -57,10 +60,19 @@
     return old + " " + now;
   }
 
+  // Se rientri nella stessa Meet (ricarica, connessione caduta) si continua la stessa trascrizione.
+  const code = location.pathname.split("/")[1] || "";
+  let resume = null;
+  chrome.storage.local.get(null, (all) => {
+    const [key, c] = Object.entries(all).filter(([k, c]) => k.startsWith("call:") && c.source === "meet" &&
+      c.meetCode === code && Date.now() - new Date(c.date) < 3 * 3600e3).sort().pop() || [];
+    if (key) resume = { key, start: new Date(c.date).getTime(), entries: c.entries, title: c.title, date: c.date, meetCode: code };
+  });
+
   function startSession() {
-    const code = location.pathname.split("/")[1] || "";
+    if (resume) { session = resume; return; }
     session = {
-      key: `call:${Date.now()}`, start: Date.now(), entries: [],
+      key: `call:${Date.now()}`, start: Date.now(), entries: [], meetCode: code,
       title: `Google Meet ${code}`.trim(), date: new Date().toISOString(),
     };
   }
@@ -94,9 +106,9 @@
   function save() {
     if (!dirty || !session) return;
     dirty = false;
-    const { key, title, date, entries } = session;
+    const { key, title, date, meetCode, entries } = session;
     chrome.storage.local.set({
-      [key]: { title, date, source: "meet", entries: entries.map(({ t, speaker, text }) => ({ t, speaker, text })) },
+      [key]: { title, date, meetCode, source: "meet", entries: entries.map(({ t, speaker, text }) => ({ t, speaker, text })) },
     });
   }
 
@@ -105,7 +117,7 @@
     if (!inCall() && !session) { badgeEl?.remove(); badgeEl = null; return; }
     if (!badgeEl) {
       badgeEl = document.createElement("div");
-      badgeEl.style.cssText = "position:fixed;left:12px;top:12px;z-index:99999;padding:6px 12px;border-radius:99px;" +
+      badgeEl.style.cssText = "position:fixed;left:12px;top:12px;z-index:99999;padding:6px 12px;border-radius:14px;white-space:pre-line;" +
         "font:13px system-ui,sans-serif;color:#fff;cursor:pointer;box-shadow:0 2px 8px #0005";
       badgeEl.title = "Apri l'archivio delle trascrizioni";
       badgeEl.onclick = () => chrome.runtime.sendMessage({ type: "openCalls", key: session?.key });
@@ -120,6 +132,8 @@
       badgeEl.textContent = n ? `⏸ Sottotitoli spenti · ${n} interventi salvati (premi CC per riprendere)`
         : "📝 Premi CC (sottotitoli) per avviare la trascrizione";
     }
+    if (backupOn) badgeEl.textContent += "\n🎙 Backup audio attivo";
+    else if (settings.meetAudioBackup) badgeEl.textContent += "\n🎙 Backup audio spento: clicca l'icona dell'estensione per avviarlo";
   }
 
   let timer;
