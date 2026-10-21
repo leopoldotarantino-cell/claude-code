@@ -93,7 +93,10 @@ $("stop").onclick = stop;
 $("recapBtn").onclick = makeRecap;
 $("copy").onclick = () => navigator.clipboard.writeText(callMarkdown(call, recapText));
 $("download").onclick = () => download(callMarkdown(call, recapText), call.date);
-window.addEventListener("beforeunload", (e) => { if (!$("stop").disabled) e.preventDefault(); });
+// Chrome mostra la conferma di uscita solo se c'è stato un clic nella finestra: senza, registra solo un errore.
+window.addEventListener("pointerdown", () => {
+  window.addEventListener("beforeunload", (e) => { if (!$("stop").disabled) e.preventDefault(); });
+}, { once: true });
 
 (async () => {
   settings = await getSettings();
