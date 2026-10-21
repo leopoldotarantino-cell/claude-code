@@ -1,11 +1,32 @@
 {
   "manifest_version": 3,
   "name": "Trascrittore Call",
-  "version": "1.0",
-  "description": "Trascrive in tempo reale le call (Meet, Teams, Zoom web…) separando le voci e genera il recap.",
-  "permissions": ["tabCapture", "activeTab", "storage"],
-  "host_permissions": ["https://api.groq.com/*"],
-  "action": { "default_title": "Avvia trascrizione di questa scheda" },
-  "background": { "service_worker": "background.js" },
-  "options_page": "options.html"
+  "version": "2.0",
+  "description": "Trascrive le call con il nome di chi parla (Google Meet) o dall'audio della scheda, e genera il recap.",
+  "permissions": [
+    "tabCapture",
+    "activeTab",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://api.groq.com/*"
+  ],
+  "action": {
+    "default_title": "Trascrittore Call"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "options_page": "options.html",
+  "content_scripts": [
+    {
+      "matches": [
+        "https://meet.google.com/*"
+      ],
+      "js": [
+        "meet.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
 }

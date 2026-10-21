@@ -3,7 +3,7 @@ const API = "https://api.groq.com/openai/v1";
 
 export const DEFAULTS = {
   apiKey: "", language: "auto", myName: "Io", othersName: "Interlocutori",
-  sttModel: "whisper-large-v3", llmModel: "llama-3.3-70b-versatile",
+  sttModel: "whisper-large-v3", llmModel: "llama-3.3-70b-versatile", autoCaptions: true,
 };
 
 export async function getSettings() {

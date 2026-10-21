@@ -3,7 +3,7 @@
 <head><meta charset="utf-8"><title>Impostazioni – Trascrittore Call</title><link rel="stylesheet" href="style.css"></head>
 <body class="options">
 <h1>⚙️ Impostazioni</h1>
-<label>Chiave API Groq (gratuita)
+<label>Chiave API Groq (gratuita, serve per il recap e per le call fuori da Meet)
   <input id="apiKey" type="password" placeholder="gsk_...">
   <small>Creala in 2 minuti su <a href="https://console.groq.com/keys" target="_blank">console.groq.com/keys</a> (account gratuito, nessuna carta di credito).</small>
 </label>
@@ -16,17 +16,15 @@
   </select>
   <small>Se sai già la lingua, sceglierla migliora la precisione.</small>
 </label>
-<label>Il tuo nome nella trascrizione <input id="myName"></label>
-<label>Etichetta per gli altri partecipanti <input id="othersName"></label>
+<label>Il tuo nome nella trascrizione (su Meet sostituisce "Tu") <input id="myName"></label>
+<label>Etichetta per gli altri (solo modalità audio, fuori da Meet) <input id="othersName"></label>
+<label class="check"><input id="autoCaptions" type="checkbox"> Su Google Meet attiva da solo i sottotitoli (servono per la trascrizione con i nomi)</label>
 <details><summary>Avanzate</summary>
   <label>Modello trascrizione <input id="sttModel"></label>
   <label>Modello recap <input id="llmModel"></label>
 </details>
 <button id="save" class="primary">Salva</button> <span id="saved" class="muted"></span>
-<h1 style="margin-top:32px">🗂️ Ultima call</h1>
-<div id="last" class="muted">Nessuna call salvata.</div>
-<p><button id="dlLast" hidden>Scarica .md</button> <button id="copyLast" hidden>Copia</button></p>
-<pre id="lastText" style="white-space:pre-wrap;max-height:400px;overflow:auto"></pre>
+<p><a href="calls.html">🗂️ Apri l'archivio delle call</a></p>
 <script type="module" src="options.js"></script>
 </body>
 </html>

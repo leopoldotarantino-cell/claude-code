@@ -25,3 +25,13 @@ body.options { max-width:520px; height:auto; display:block; }
 .options input, .options select { display:block; width:100%; margin-top:4px; padding:7px; font:inherit; border-radius:6px; border:1px solid #8886; background:var(--card); color:var(--fg); }
 .options small { display:block; font-weight:normal; color:var(--muted); margin-top:3px; }
 a { color:var(--accent); }
+.options label.check { display:flex; gap:8px; align-items:center; font-weight:normal; }
+.options label.check input { display:inline; width:auto; margin:0; }
+body.archive { flex-direction:row; gap:16px; padding:0; }
+.archive aside { width:280px; flex-shrink:0; padding:16px; border-right:1px solid #8884; overflow-y:auto; }
+.archive aside ul { list-style:none; padding:0; margin:12px 0; }
+.archive aside li { padding:8px 10px; border-radius:8px; cursor:pointer; margin-bottom:4px; }
+.archive aside li:hover { background:var(--card); } .archive aside li.active { background:var(--me); }
+.archive main { padding:16px 16px 16px 0; overflow:hidden; }
+.archive #view { display:flex; flex-direction:column; height:100%; }
+.archive #view[hidden] { display:none; }

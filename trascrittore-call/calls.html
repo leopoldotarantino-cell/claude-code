@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="it">
+<head><meta charset="utf-8"><title>Archivio call – Trascrittore Call</title><link rel="stylesheet" href="style.css"></head>
+<body class="archive">
+<aside>
+  <h1>🗂️ Le tue call</h1>
+  <a href="options.html" class="muted">⚙️ Impostazioni</a>
+  <ul id="list"></ul>
+</aside>
+<main>
+  <div id="empty" class="muted">Nessuna call ancora. Entra in una Google Meet e attiva i sottotitoli (CC): la trascrizione comparirà qui.</div>
+  <div id="view" hidden>
+    <header>
+      <div><h1 id="title"></h1><div id="meta" class="muted"></div></div>
+      <span id="live" class="pill rec" hidden>● In corso</span>
+    </header>
+    <div class="toolbar">
+      <button id="recapBtn" class="primary">📌 Genera recap</button>
+      <button id="copy">Copia</button>
+      <button id="download">Scarica .md</button>
+      <button id="del" class="danger">Elimina</button>
+    </div>
+    <section id="recapBox" hidden><h2>Recap</h2><div id="recap"></div></section>
+    <h2>Trascrizione</h2>
+    <div id="transcript"></div>
+  </div>
+</main>
+<script type="module" src="calls.js"></script>
+</body>
+</html>
